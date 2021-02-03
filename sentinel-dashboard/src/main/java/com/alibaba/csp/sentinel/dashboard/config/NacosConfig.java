@@ -15,6 +15,8 @@
  */
 package com.alibaba.csp.sentinel.dashboard.config;
 
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.ApiDefinitionEntity;
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.gateway.GatewayFlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.fastjson.JSON;
@@ -36,6 +38,11 @@ public class NacosConfig {
     @Value("${sentinel.nacos.nacosAddr}")
     private String nacosAddr;
 
+    /**
+     * 流控规则
+     *
+     * @return
+     */
     @Bean
     public Converter<List<FlowRuleEntity>, String> flowRuleEntityEncoder() {
         return JSON::toJSONString;
@@ -46,6 +53,45 @@ public class NacosConfig {
         return s -> JSON.parseArray(s, FlowRuleEntity.class);
     }
 
+    /**
+     * 网关API
+     *
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public Converter<List<ApiDefinitionEntity>, String> apiDefinitionEntityEncoder() {
+        return JSON::toJSONString;
+    }
+
+    @Bean
+    public Converter<String, List<ApiDefinitionEntity>> apiDefinitionEntityDecoder() {
+        return s -> JSON.parseArray(s, ApiDefinitionEntity.class);
+    }
+
+    /**
+     * 网关flowRule
+     *
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public Converter<List<GatewayFlowRuleEntity>, String> gatewayFlowRuleEntityEncoder() {
+        return JSON::toJSONString;
+    }
+
+    @Bean
+    public Converter<String, List<GatewayFlowRuleEntity>> gatewayFlowRuleEntityDecoder() {
+        return s -> JSON.parseArray(s, GatewayFlowRuleEntity.class);
+    }
+
+
+    /**
+     * 配置nacos配置连接
+     *
+     * @return
+     * @throws Exception
+     */
     @Bean
     public ConfigService nacosConfigService() throws Exception {
         return ConfigFactory.createConfigService(nacosAddr);
