@@ -15,6 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.rule.nacos;
 
+import com.alibaba.csp.sentinel.dashboard.config.NacosConfigUtil;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.rule.FlowRuleEntity;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
 import com.alibaba.csp.sentinel.datasource.Converter;
